@@ -1,0 +1,78 @@
+/*Problem Statement 2: MCGM want to prepare the list of doctor area wise to assign the duty to take care of patients. In order to prepare the list, computer operator, enter the name of doctor and area. Finally, this list is sorted area wise, system uses operator overloading concept (function) to compare the area. 
+Implement comparison (<) operator function to compare the area alphabetically. 
+Use this function in the main to sort the list alphabetically on area.
+Print the sorted list in the main function.
+
+Concept to be implemented: Operator Overloading with friend function
+*/
+#include<iostream>
+#include<string.h>          //for using 'string'
+using namespace std;
+class Doctor
+{
+    public:             //access specifier
+    string name;
+    string area;
+    Doctor()            //Constructor
+    {
+        name ="NA";
+        area ="NA";
+    }
+    Doctor(string n, string a)      //Parameterized Constructor
+    {
+        name = n;
+        area = a;
+    }
+    void display(int x)             //display func for printing
+    { 
+        int i = x;
+        cout<<"\n\nName of the Doctor "<<i<<": "<<name;
+        cout<<"\nArea of the Doctor "<<i<<": "<<area;
+    }
+    bool operator <(Doctor& a)
+    {
+    if(area < a.area)
+    {
+        return true;
+    }
+    else
+        return false;
+    }
+};
+int main()
+{
+    string n, a;
+    int x;
+    Doctor d[10];       //array of object
+    Doctor temp;        //temp object for swapping
+    cout<<"Enter the number of Doctors Avalaible: ";
+    cin>>x;
+    for(int i=1; i<=x; i++)             //for taking user input
+    {
+        cout<<"\nEnter the Name of Doctor "<<i<<": ";
+        cin>>n;
+        cout<<"Enter the Area of the Doctor "<<i<<": ";
+        cin>>a;
+        d[i]= Doctor(n,a);               //assigning the values
+    }
+    cout<<"\nThe List of Doctors: ";      //displaying without sorting
+    for(int i=1; i<=x; i++)
+    {
+        d[i].display(i);
+    }
+    cout<<"\n\nThe List of Doctors area wise: ";    //displaying after sorting
+    for(int i=1; i<=x; i++)
+    {
+        for(int j=1; j<=x-i; j++)
+        {
+        if(d[j+1].area<d[j].area)         //sorting area wise using operator <
+        {
+            temp = d[j+1];
+            d[j+1] = d[j];
+            d[j] = temp;
+        }
+        }
+        d[i].display(i);
+    }
+    return 0;
+}
