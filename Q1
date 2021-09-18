@@ -1,0 +1,90 @@
+/*Problem Statement 1: Write a program to calculate the results of a student by combining internal and external marks out of 100. Write two separate classes as “Internal1” and “External1” with following data members common to both the classes. (Out of 50 marks for each class)
+•	Marks of Math
+•	Marks of OPP
+•	Marks of SE
+•	Marks of DS
+Use constructor to input the marks for each class. Define binary operator overloading using friend function to calculate the final result by combining internal and external marks. 
+Perform following tasks:  
+1.	Print the total marks subject wise.   
+2.	Print the result depending on marks of individual subjects (Marks < 50 - fail)
+3.	Calculate total marks 
+4.	Print percentage if student pass  
+*/
+#include<iostream>
+using namespace std;
+class External1;			//Declaration of a class
+class Internal1
+{
+    float m, o, s, d;
+    public:					//access specifier
+    void sdata()
+    {
+        cout<<"Enter the Internal Marks of Math (out of 50): ";
+        cin>>m;
+        cout<<"Enter the Internal Marks of OOP (out of 50): ";
+        cin>>o;
+        cout<<"Enter the Internal Marks of SE (out of 50): ";
+        cin>>s;
+        cout<<"Enter the Internal Marks of DSA (out of 50): ";
+        cin>>d;
+    }
+    friend External1 operator+(Internal1, External1);      // friend function declaration
+};
+class External1
+{
+    float ma, oo, se, ds;
+    public:
+    void readdata()
+    {
+        cout<<"\nEnter the External Marks of Math (out of 50): ";
+        cin>>ma;
+        cout<<"Enter the External Marks of OOP (out of 50): ";
+        cin>>oo;
+        cout<<"Enter the External Marks of SE (out of 50): ";
+        cin>>se;
+        cout<<"Enter the External Marks of DSA (out of 50): ";
+        cin>>ds;
+    }  
+    friend External1 operator+(Internal1, External1);      // friend function declaration
+};
+External1 operator+(Internal1 i, External1 t)          //Operator overloading using friend function
+{
+    int p;
+    cout<<"\nTotal Marks of Math (out of 100): "<<i.m+t.ma;
+    if(i.m+t.ma<50)                                 //Checks whether total marks are below 50
+    cout<<"\nResult: FAIL";
+    else
+    cout<<"\nResult: PASS";
+    cout<<"\nTotal Marks of OOP (out of 100): "<<i.o+t.oo;
+    if(i.o+t.oo<50)
+    cout<<"\nResult: FAIL";
+    else
+    cout<<"\nResult: PASS";
+    cout<<"\nTotal Marks of SE (out of 100): "<<i.s+t.se;
+    if(i.s+t.se<50)
+    cout<<"\nResult: FAIL";
+    else
+    cout<<"\nResult: PASS";
+    cout<<"\nTotal Marks of DSA (out of 100): "<<i.d+t.ds;
+    if(i.d+t.ds<50)
+    cout<<"\nResult: FAIL";
+    else
+    cout<<"\nResult: PASS";
+    p = (i.m+t.ma+i.o+t.oo+i.s+t.se+i.d+t.ds)/4;   //basically it is the 
+                           // average of marks as they already are out of 100
+    if(p>50)
+    cout<<"\nPercentage = "<<p<<"%";
+    return t;
+}
+int main()
+{
+    Internal1 a;
+    External1 b;
+    cout<<"Internal Marks:\n";
+    a.sdata();
+    cout<<"\nExternal Marks:";
+    b.readdata();
+    cout<<"\nTotal Marks and Result:";
+    External1(a + b);             //operator+ used
+    return 0;
+}
